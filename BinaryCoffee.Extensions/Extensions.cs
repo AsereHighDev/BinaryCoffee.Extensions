@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace BinaryCofee.Extensions
+namespace BinaryCoffee.Extensions
 {
     public static class Helpers
     {
@@ -215,10 +215,10 @@ namespace BinaryCofee.Extensions
                     if (char.IsLower(lastChar) && isUpper || char.IsDigit(ch))
                         builder.Append('_');
 
-                    if (!isUpper)
-                        builder.Append(char.ToUpperInvariant(ch));
-                    else
+                    if (isUpper)
                         builder.Append(ch);
+                    else
+                        builder.Append(char.ToUpperInvariant(ch));
 
                     if (!start)
                         start = true;
