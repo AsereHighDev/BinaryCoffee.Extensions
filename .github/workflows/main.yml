@@ -1,4 +1,4 @@
-name: ${{ github.repository.name }} - Build and deployment
+name: Build and deployment
 on:
   push:
     branches: [ "**" ]
