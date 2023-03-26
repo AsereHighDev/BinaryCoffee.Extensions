@@ -24,8 +24,8 @@ namespace BinaryCoffee.Extensions
                 builder.Append(getter());
             return builder;
         }
-        
-        
+
+
 
         public static StringBuilder AppendFormatIf(this StringBuilder builder, bool condition, Func<StringFormatter, StringBuilder> ifAppend, Func<StringFormatter, StringBuilder>? elseAppend = null)
         {
@@ -70,173 +70,170 @@ namespace BinaryCoffee.Extensions
 
         public static string ToCamelCase(this string name)
         {
-            StringBuilder builder = new();
-            var current = -1;
-            var length = name.Length;
-            var needUpper = true;
-            var lastChar = char.MinValue;
+            Span<char> buffer = stackalloc char[name.Length];
+            int index = 0;
+            bool needUpper = true;
+            char lastChar = char.MinValue;
 
-            while (++current < length)
+            foreach (char ch in name)
             {
-                var ch = name[current];
-
                 if (char.IsDigit(ch))
                 {
-                    if (builder.Length == 0)
-                        builder.Append("_");
+                    if (index == 0)
+                    {
+                        buffer = stackalloc char[buffer.Length + 1];                        
+                        buffer[index++] = '_';
+                    }
 
-                    builder.Append(ch);
+                    buffer[index++] = ch;
                     needUpper = true;
                 }
-                else if (char.IsSeparator(ch) || ch == '_' || ch == '-' || ch == '~')
+                else if (!char.IsLetterOrDigit(ch))
                     needUpper = true;
-                else if (builder.Length == 0 && char.IsUpper(ch))
+                else if (index == 0 && char.IsUpper(ch))
                 {
-                    builder.Append(char.ToLowerInvariant(ch));
+                    buffer[index++] = char.ToLower(ch);
                     needUpper = false;
                 }
-                else if (builder.Length > 0 && (needUpper || char.IsLower(lastChar) && char.IsUpper(ch)))
+                else if (index > 0 && (needUpper || char.IsLower(lastChar) && char.IsUpper(ch)))
                 {
-                    builder.Append(char.ToUpperInvariant(ch));
+                    buffer[index++] = char.ToUpper(ch);
                     needUpper = false;
                 }
                 else
                 {
-                    builder.Append(ch);
+                    buffer[index++] = ch;
                     needUpper = false;
                 }
 
                 lastChar = ch;
             }
 
-            return builder.ToString();
+            return new(buffer[..index]);
         }
 
         public static string ToPascalCase(this string name)
         {
-            StringBuilder builder = new();
-            var current = -1;
-            var length = name.Length;
-            var needUpper = true;
-            var lastChar = char.MinValue;
+            Span<char> buffer = stackalloc char[name.Length];
+            int index = 0;
+            bool needUpper = true;
+            char lastChar = char.MinValue;
 
-            while (++current < length)
+            foreach (char ch in name)
             {
-                var ch = name[current];
-
                 if (char.IsDigit(ch))
                 {
-                    if (builder.Length == 0)
-                        builder.Append("_");
-
-                    builder.Append(ch);
+                    if (index == 0)
+                    {
+                        buffer = stackalloc char[buffer.Length + 1];
+                        buffer[index++] = '_';
+                    }
+                    buffer[index++] = ch;
                     needUpper = true;
                 }
-                else if (char.IsSeparator(ch) || ch == '_' || ch == '-' || ch == '~')
+                else if (char.IsSeparator(ch) || ch is '_' or '-' or '~')
                     needUpper = true;
-
                 else if (needUpper || char.IsLower(lastChar) && char.IsUpper(ch))
                 {
-                    builder.Append(char.ToUpperInvariant(ch));
+                    buffer[index++] = char.ToUpperInvariant(ch);
                     needUpper = false;
                 }
                 else
                 {
-                    builder.Append(ch);
+                    buffer[index++] = ch;
                     needUpper = false;
                 }
 
                 lastChar = ch;
             }
 
-            return builder.ToString();
+            return new string(buffer[..index]);
         }
 
-        public static string ToLowerSnakeCase(this string name)
+        public static string ToSnakeLowerCase(this string name)
         {
-            StringBuilder builder = new();
-            int current = -1,
-                length = name.Length;
-            var start = false;
-            var lastChar = char.MinValue;
+            Span<char> buffer = stackalloc char[name.Length * 2];
+            int index = 0;
+            bool start = false;
+            char lastChar = char.MinValue;
 
-            while (++current < length)
+            for (int current = 0; current < name.Length; current++)
             {
-                var ch = name[current];
-                if (char.IsSeparator(ch))
+                char ch = name[current];
+                bool isUpper = char.IsUpper(ch), isDigit = char.IsDigit(ch), isSeparator = !char.IsLetterOrDigit(ch);
+
+                if (isSeparator || (char.IsLower(lastChar) && isUpper) || isDigit)
                 {
-                    if (!start) continue;
-
-                    builder.Append('_');
-                }
-                else
-                {
-                    var isUpper = char.IsUpper(ch);
-
-                    if (char.IsLower(lastChar) && isUpper || char.IsDigit(ch))
-                        builder.Append('_');
-
-                    if (isUpper)
-                        builder.Append(char.ToLowerInvariant(ch));
-                    else
-                        builder.Append(ch);
-
                     if (!start)
-                        start = true;
+                    {
+                        if (isSeparator)
+                            continue;
 
-                    lastChar = ch;
+                        if (isDigit)
+                            buffer = stackalloc char[buffer.Length + 1];
+                    }
+
+                    if (char.IsLetterOrDigit(lastChar) && isSeparator || char.IsLower(lastChar) && isUpper)
+                        buffer[index++] = '_';
                 }
+
+                if (!isSeparator)
+                    buffer[index++] = char.ToLowerInvariant(ch);
+
+                if (!start)
+                    start = true;
+
+                lastChar = ch;
             }
 
-            return builder.ToString();
+            return new string(buffer[..index]);
         }
 
-        public static string ToUpperSnakeCase(this string name)
+        public static string ToSnakeUpperCase(this string name)
         {
-            StringBuilder builder = new();
-            var current = -1;
-            var length = name.Length;
-            var start = false;
-            var lastChar = char.MinValue;
+            Span<char> buffer = stackalloc char[name.Length * 2];
+            int index = 0;
+            bool start = false;
+            char lastChar = char.MinValue;
 
-            while (++current < length)
+            for (int current = 0; current < name.Length; current++)
             {
-                var ch = name[current];
-                if (char.IsSeparator(ch))
+                char ch = name[current];
+                bool isUpper = char.IsUpper(ch), isDigit = char.IsDigit(ch), isSeparator = !char.IsLetterOrDigit(ch);
+
+                if (isSeparator || (char.IsLower(lastChar) && isUpper) || isDigit)
                 {
-                    if (!start) continue;
-
-                    builder.Append('_');
-                }
-                else
-                {
-                    var isUpper = char.IsUpper(ch);
-
-                    if (char.IsLower(lastChar) && isUpper || char.IsDigit(ch))
-                        builder.Append('_');
-
-                    if (isUpper)
-                        builder.Append(ch);
-                    else
-                        builder.Append(char.ToUpperInvariant(ch));
-
                     if (!start)
-                        start = true;
+                    {
+                        if (isSeparator)
+                            continue;
+                        if (isDigit)
+                            buffer = stackalloc char[buffer.Length + 1];
+                    }
 
-                    lastChar = ch;
+                    if (char.IsLetterOrDigit(lastChar) && isSeparator || char.IsLower(lastChar) && isUpper)
+                        buffer[index++] = '_';
                 }
+
+                if (!isSeparator)
+                    buffer[index++] = char.ToUpperInvariant(ch);
+
+                if (!start)
+                    start = true;
+
+                lastChar = ch;
             }
 
-            return builder.ToString();
+            return new string(buffer[..index]);
         }
 
         public static string ToCamelCase(this Enum value) => value.ToString().ToCamelCase();
 
         public static string ToPascalCase(this Enum value) => value.ToString().ToPascalCase();
 
-        public static string ToLowerSnakeCase(this Enum value) => value.ToString().ToLowerSnakeCase();
+        public static string ToLowerSnakeCase(this Enum value) => value.ToString().ToSnakeLowerCase();
 
-        public static string ToUpperSnakeCase(this Enum value) => value.ToString().ToUpperSnakeCase();
+        public static string ToUpperSnakeCase(this Enum value) => value.ToString().ToSnakeUpperCase();
 
     }
 
