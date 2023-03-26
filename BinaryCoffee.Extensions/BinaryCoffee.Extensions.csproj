@@ -31,6 +31,13 @@
 		<!-- Exclude the output of source generators from the compilation -->
 		<Compile Remove="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\ReadMe.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Attributes\**" />
@@ -54,11 +61,6 @@
 		<PackageReference Include="IndexRange" Version="1.0.2" PrivateAssets="all" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" GeneratePathProperty="true" />
 		<PackageReference Include="System.Memory" Version="4.5.5" PrivateAssets="all" GeneratePathProperty="true" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 </Project>

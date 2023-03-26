@@ -5,14 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BinaryCoffee.Extensions
 {
     public static class Helpers
     {
-        public static bool HasName(this string clsName, AttributeData attr) => attr.AttributeClass?.Name == clsName;
         public static string Join<T>(this IEnumerable<T> strs, Func<T, string> formmater, string? separator = "")
         {
             return string.Join(separator, strs.Select(formmater));
