@@ -18,7 +18,7 @@ jobs:
       run: dotnet build ${{ github.event.repository.name }}/${{ github.event.repository.name }}.csproj --configuration Release --no-restore
     - name: Test
       run: dotnet test ${{ github.event.repository.name }}/${{ github.event.repository.name }}.csproj --no-restore --verbosity normal
-    - name: PackPublish
+    - name: Pack
       if: github.ref == 'refs/heads/master'
       run: dotnet pack ${{ github.event.repository.name }}/${{ github.event.repository.name }}.csproj --no-build --configuration Release
     - name: Publish
