@@ -27,5 +27,5 @@ jobs:
         USERNAME=${{ github.actor }}
         USERNAME=${USERNAME//-/_}
         USERNAME=${USERNAME^^}
-        echo "::set-env name=NUGET_API_KEY::${{ secrets.${USERNAME}_NUGET_API_KEY }}
+        echo "::set-env name=NUGET_API_KEY::${{ secrets.${USERNAME}_NUGET_API_KEY }}"
         dotnet nuget push "${{ github.event.repository.name }}/bin/Release/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
