@@ -20,7 +20,7 @@
 		<PackageIconUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions/blob/master/image/binarycoffee.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions</RepositoryUrl>
 		<Title>BinaryCoffee.Extensions</Title>
-		<Authors>Pedro Gil Mora;Sergio Triana Escobedo</Authors>
+		<Authors>pedro.gilmora,stescobedo</Authors>
 		<Company>AsereHighDev</Company>
 		<Description>BinaryCoffee.Extensions is a library written in C# which adds extra functionality to the StringBuilder class</Description>
 		<Copyright>Copyright © AsereHighDev 2023</Copyright>
