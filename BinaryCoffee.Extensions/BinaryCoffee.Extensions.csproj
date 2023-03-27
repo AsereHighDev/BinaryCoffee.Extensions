@@ -17,7 +17,7 @@
 		</PackageVersion>
 		<PackageId>BinaryCoffee.AnyDataBaseFluent</PackageId>
 		<PackageProjectUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions</PackageProjectUrl>
-		<PackageIconUrl>https://github.com/stescobedo92/AnyDataBaseFluent/blob/master/image/bncf.jpg</PackageIconUrl>
+		<PackageIconUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions/blob/master/image/binarycoffee.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions</RepositoryUrl>
 		<Title>BinaryCoffee.Extensions</Title>
 		<Authors>Pedro Gil Mora;Sergio Triana Escobedo</Authors>
