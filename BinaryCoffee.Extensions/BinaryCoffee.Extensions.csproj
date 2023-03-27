@@ -15,12 +15,30 @@
 				))
 			))
 		</PackageVersion>
+		<PackageId>BinaryCoffee.AnyDataBaseFluent</PackageId>
+		<PackageProjectUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions</PackageProjectUrl>
+		<PackageIconUrl>https://github.com/stescobedo92/AnyDataBaseFluent/blob/master/image/bncf.jpg</PackageIconUrl>
+		<RepositoryUrl>https://github.com/AsereHighDev/BinaryCoffee.Extensions</RepositoryUrl>
+		<Title>BinaryCoffee.Extensions</Title>
+		<Authors>Pedro Gil Mora;Sergio Triana Escobedo</Authors>
 		<Company>AsereHighDev</Company>
-		<Description>Generator for MAUI View Models</Description>
-		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-		<PackageTags>REST; Source Generator; C#; </PackageTags>
+		<Description>BinaryCoffee.Extensions is a library written in C# which adds extra functionality to the StringBuilder class</Description>
+		<Copyright>Copyright © AsereHighDev 2023</Copyright>
+		<PackageIcon>binarycoffee.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>External, Libraries, C#, REST</PackageTags>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\image\binarycoffee.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 	<PropertyGroup Condition=" $(Configuration) == 'Test' ">
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
