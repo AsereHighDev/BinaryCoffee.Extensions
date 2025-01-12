@@ -8,6 +8,15 @@ namespace BinaryCoffee.Extensions.Helpers
 {
     public static class AsyncExtensions
     {
+        /// <summary>
+        /// Asynchronously joins the elements of an IAsyncEnumerable&lt;T&gt; into a single string, 
+        /// using a specified formatter function and an optional separator.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the source sequence.</typeparam>
+        /// <param name="source">The source sequence of elements to join.</param>
+        /// <param name="formatter">A function that formats each element into a string asynchronously.</param>
+        /// <param name="separator">An optional string separator to insert between each formatted element. Default is an empty string.</param>
+        /// <returns>A task that represents the asynchronous operation, with a string that contains the joined elements as its result.</returns>
         public static async Task<string> JoinAsync<T>(this IAsyncEnumerable<T> source, Func<T, Task<string>> formatter, string separator = "")
         {
             var builder = new StringBuilder();
