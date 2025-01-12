@@ -1,4 +1,4 @@
-﻿using BinaryCoffee.Extensions;
+﻿using BinaryCoffee.Extensions.Helpers;
 using FluentAssertions;
 using Xunit;
 
